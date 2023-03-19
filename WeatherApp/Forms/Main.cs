@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeatherApp.Classes;
 using WeatherApp.Classes.Helpers;
@@ -35,9 +36,9 @@ namespace WeatherApp
         }
 
         #region Fill
-        public void FillTodayWeatherSituations(string city)
+        public async Task FillTodayWeatherSituations(string city)
         {
-            Root root = weatherApi.GetWeatherForecast(city);
+            Root root = await weatherApi.GetWeatherForecastAsync(city, p_loading);
 
             pbox_conditionIcon.ImageLocation = "https:" + root.current.condition.icon;
 
@@ -70,9 +71,9 @@ namespace WeatherApp
             pictureBox1.Image = bmp;
         }
 
-        public void FillWeatherSituationsFlowLayoutPanel(string city)
+        public async Task FillWeatherSituationsFlowLayoutPanel(string city)
         {
-            Root root = weatherApi.GetWeatherForecast(city);
+            Root root = await weatherApi.GetWeatherForecastAsync(city, p_loading);
             root.forecast.forecastday.RemoveAt(0);
 
             flp_weatherSituations.Controls.Clear();
@@ -89,10 +90,29 @@ namespace WeatherApp
             }
         }
 
-        public void FillCitiesFlowLayoutPanel()
+        public async Task FillCitiesFlowLayoutPanel()
         {
             flp_cities.Controls.Clear();
-            foreach (var city in weatherApi.GetCities())
+            foreach (var city in await weatherApi.GetCities())
+            {
+                Cities cities = new Cities();
+
+                cities.City = city.Name;
+
+                #region Event
+                cities.Click += new EventHandler(Cities_Click);
+                cities._cityClick += new EventHandler(Cities_Click);
+                #endregion
+
+                flp_cities.Controls.Add(cities);
+            }
+        }
+
+        public async Task FillSearchCitiesFlowLayoutPanel(string search)
+        {
+            var result = await weatherApi.GetCities();
+
+            foreach (var city in result.Where(x => x.Name.ToLower().Contains(search)).ToList())
             {
                 Cities cities = new Cities();
 
@@ -156,21 +176,7 @@ namespace WeatherApp
             }
             else
             {
-                var result = weatherApi.GetCities().Where(x => x.Name.ToLower().Contains(search)).ToList();
-
-                foreach (var city in result)
-                {
-                    Cities cities = new Cities();
-
-                    cities.City = city.Name;
-
-                    #region Event
-                    cities.Click += new EventHandler(Cities_Click);
-                    cities._cityClick += new EventHandler(Cities_Click);
-                    #endregion
-
-                    flp_cities.Controls.Add(cities);
-                }
+                FillSearchCitiesFlowLayoutPanel(search);
             }
         }
 

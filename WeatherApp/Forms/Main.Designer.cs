@@ -32,6 +32,7 @@
             this.flp_weatherSituations = new System.Windows.Forms.FlowLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flp_cities = new System.Windows.Forms.FlowLayoutPanel();
+            this.btn_clear = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.tlp = new System.Windows.Forms.TableLayoutPanel();
@@ -71,7 +72,8 @@
             this.pbox_conditionIcon = new System.Windows.Forms.PictureBox();
             this.lbl_conditionText = new System.Windows.Forms.Label();
             this.lbl_dayCelsius = new System.Windows.Forms.Label();
-            this.btn_clear = new System.Windows.Forms.Button();
+            this.p_loading = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -94,6 +96,7 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbox_conditionIcon)).BeginInit();
+            this.p_loading.SuspendLayout();
             this.SuspendLayout();
             // 
             // flp_weatherSituations
@@ -138,6 +141,24 @@
             this.flp_cities.Name = "flp_cities";
             this.flp_cities.Size = new System.Drawing.Size(197, 605);
             this.flp_cities.TabIndex = 4;
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
+            this.btn_clear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
+            this.btn_clear.FlatAppearance.BorderSize = 0;
+            this.btn_clear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
+            this.btn_clear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btn_clear.ForeColor = System.Drawing.Color.White;
+            this.btn_clear.Location = new System.Drawing.Point(180, 61);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(25, 25);
+            this.btn_clear.TabIndex = 3;
+            this.btn_clear.Text = "X";
+            this.btn_clear.UseVisualStyleBackColor = false;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_close
             // 
@@ -683,23 +704,26 @@
             this.lbl_dayCelsius.Text = "lbl_dayCelsius";
             this.lbl_dayCelsius.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btn_clear
+            // p_loading
             // 
-            this.btn_clear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
-            this.btn_clear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
-            this.btn_clear.FlatAppearance.BorderSize = 0;
-            this.btn_clear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
-            this.btn_clear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
-            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_clear.ForeColor = System.Drawing.Color.White;
-            this.btn_clear.Location = new System.Drawing.Point(180, 61);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(25, 25);
-            this.btn_clear.TabIndex = 3;
-            this.btn_clear.Text = "X";
-            this.btn_clear.UseVisualStyleBackColor = false;
-            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
+            this.p_loading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(33)))), ((int)(((byte)(58)))));
+            this.p_loading.Controls.Add(this.label9);
+            this.p_loading.Location = new System.Drawing.Point(408, 191);
+            this.p_loading.Name = "p_loading";
+            this.p_loading.Size = new System.Drawing.Size(274, 257);
+            this.p_loading.TabIndex = 4;
+            // 
+            // label9
+            // 
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 35F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(0, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(274, 257);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Loading...";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Main
             // 
@@ -708,11 +732,13 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(14)))), ((int)(((byte)(29)))));
             this.ClientSize = new System.Drawing.Size(1284, 711);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.p_loading);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1300, 750);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Weather App with API";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Main_Load);
             this.SizeChanged += new System.EventHandler(this.Main_SizeChanged);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -738,6 +764,7 @@
             this.tableLayoutPanel8.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbox_conditionIcon)).EndInit();
+            this.p_loading.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -786,5 +813,7 @@
         private System.Windows.Forms.Button btn_close;
         private System.Windows.Forms.FlowLayoutPanel flp_cities;
         private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.Panel p_loading;
+        private System.Windows.Forms.Label label9;
     }
 }
